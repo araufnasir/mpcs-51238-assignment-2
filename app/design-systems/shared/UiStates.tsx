@@ -1,7 +1,8 @@
-import { Button, EmptyState, ErrorState, LoadingState, SuccessState } from "../../components/haunted-cinema";
-import { Section, Specimen } from "./Section";
+import type { DocsTheme } from "./types";
 
-export function UiStatesSection() {
+export function UiStates({ theme }: { theme: DocsTheme }) {
+  const { Section, Specimen, kit } = theme;
+  const { Button, EmptyState, ErrorState, LoadingState, SuccessState } = kit;
   return (
     <Section number={6} title="UI states" intro="What a screen shows when there is nothing, something on the way, a failure, or a result. Each has its own frame, so none depends on color.">
       <Specimen title="Empty" usage="A search or filter found nothing. Say why and offer a way back.">
@@ -12,7 +13,7 @@ export function UiStatesSection() {
       <Specimen title="Loading" usage="Placeholder bars where the content will land. They pulse unless motion is reduced.">
         <LoadingState label="Loading the tracks" />
       </Specimen>
-      <Specimen title="Error" usage="Hazard stripes, a warning icon and the word &lsquo;Error&rsquo;. Retrying is the primary action.">
+      <Specimen title="Error" usage="Marked with the word &lsquo;Error&rsquo; and an icon. Retrying is the primary action.">
         <ErrorState title="The notes didn't load" action={<Button variant="primary">Try again</Button>}>
           Check the connection and try once more.
         </ErrorState>

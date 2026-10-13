@@ -1,7 +1,10 @@
-import type { ReactNode } from "react";
-import { type as t } from "../../components/haunted-cinema";
+import * as library from "../../components/haunted-cinema";
+import type { DocsTheme, SectionProps, SpecimenProps } from "../shared/types";
+import { ChipsDemo, PanelDemo, RowsDemo, SearchDemo } from "./demos";
 
-export function Section({ number, title, intro, children }: { number: number; title: string; intro: string; children: ReactNode }) {
+const t = library.type;
+
+function Section({ number, title, intro, children }: SectionProps) {
   return (
     <section id={`section-${number}`} className="mt-20 scroll-mt-8">
       <header className="flex items-baseline gap-5 border-b-4 border-hc-text pb-3">
@@ -15,7 +18,7 @@ export function Section({ number, title, intro, children }: { number: number; ti
 }
 
 /** A named piece on the page: what it is and when to use it on the left, the live piece on the right. */
-export function Specimen({ title, usage, children }: { title: string; usage?: string; children: ReactNode }) {
+function Specimen({ title, usage, children }: SpecimenProps) {
   return (
     <div className="grid gap-4 border-t border-hc-border py-6 md:grid-cols-12 md:gap-8">
       <div className="md:col-span-3">
@@ -26,3 +29,13 @@ export function Specimen({ title, usage, children }: { title: string; usage?: st
     </div>
   );
 }
+
+export const theme: DocsTheme = {
+  slug: "haunted-cinema",
+  kit: library,
+  type: t,
+  demos: { ChipsDemo, PanelDemo, RowsDemo, SearchDemo },
+  Section,
+  Specimen,
+  cls: { muted: "text-hc-muted", hairline: "border-hc-border", frame: "border-2 border-hc-border", fill: "bg-hc-text" },
+};

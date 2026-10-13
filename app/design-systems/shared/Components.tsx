@@ -1,25 +1,27 @@
-import { Badge, Button, Checkbox, Link, Radio, Select, Tabs, TextField, Toggle, TrackCard, type as t } from "../../components/haunted-cinema";
 import { tracks } from "../../data/tracks";
-import { ChipsDemo, PanelDemo, RowsDemo, SearchDemo } from "./demos";
-import { Section, Specimen } from "./Section";
+import type { DocsTheme } from "./types";
 
-export function Components() {
+export function Components({ theme }: { theme: DocsTheme }) {
+  const { Section, Specimen, kit, demos, type: t } = theme;
+  const { Badge, Button, Checkbox, Link, Radio, Select, Tabs, TextField, Toggle, TrackCard } = kit;
+  const { ChipsDemo, PanelDemo, RowsDemo, SearchDemo } = demos;
+
   return (
-    <Section number={4} title="Components" intro="Real components from app/components/haunted-cinema. Hover, tab to and press them: nothing here is a picture.">
+    <Section number={4} title="Components" intro="Real components from this system's folder in app/components. Hover, tab to and press them: nothing here is a picture.">
       <Specimen title="Buttons" usage="Primary is the one action on a screen, and the only place the accent appears. Secondary is everything else.">
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-6">
           <Button variant="primary">Next track</Button>
           <Button>Details</Button>
         </div>
       </Specimen>
 
-      <Specimen title="Link" usage="Underlined Bone text. Hover inverts it.">
+      <Specimen title="Link" usage="For going somewhere. It is underlined at rest and changes on hover.">
         <p className={t.body}>
           Read the <Link href="#section-4">credits</Link>, or go back to <Link href="/">all directions</Link>.
         </p>
       </Specimen>
 
-      <Specimen title="Text input" usage="The label is always visible. Errors say 'Error' in words and thicken the border.">
+      <Specimen title="Text input" usage="The label is always visible. Errors say 'Error' in words and change the border, never color alone.">
         <div className="grid gap-6 sm:grid-cols-2">
           <TextField label="Your name" placeholder="Name" hint="Used nowhere. Nothing is saved." />
           <TextField label="Track number" defaultValue="14" error="The album has nine tracks." />
@@ -66,7 +68,7 @@ export function Components() {
         />
       </Specimen>
 
-      <Specimen title="Filter chips" usage="Narrow a list. One chip is selected at a time here, and it inverts to Bone.">
+      <Specimen title="Filter chips" usage="Narrow a list. One chip is selected at a time here.">
         <ChipsDemo />
       </Specimen>
 
@@ -74,17 +76,17 @@ export function Components() {
         <SearchDemo />
       </Specimen>
 
-      <Specimen title="Track card" usage="A track as a poster: number, title, credit, and one way in.">
+      <Specimen title="Track card" usage="A track on a card: number, title, credit, and one way in.">
         <div className="max-w-sm">
           <TrackCard track={tracks[3]} />
         </div>
       </Specimen>
 
-      <Specimen title="List rows" usage="A whole row is the button. Selected inverts to Bone.">
+      <Specimen title="List rows" usage="A whole row is the button.">
         <RowsDemo />
       </Specimen>
 
-      <Specimen title="Badge" usage="A short tag. It borrows the color around it.">
+      <Specimen title="Badge" usage="A short tag.">
         <div className="flex items-center gap-4">
           <Badge>Single</Badge>
           <Badge>New</Badge>

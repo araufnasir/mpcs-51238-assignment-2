@@ -1,14 +1,9 @@
 import { Link, type as t } from "../../components/haunted-cinema";
-import { Components } from "./Components";
-import { ColorRoles } from "./ColorRoles";
-import { ControlStates } from "./ControlStates";
-import { SpacingShape } from "./SpacingShape";
-import { TypeRoles } from "./TypeRoles";
-import { UiStatesSection } from "./UiStatesSection";
+import { DesignSystemSections, sectionTitles } from "../shared/Sections";
+import { colorIntro, colorRoles, controlNotes, tokens, typeIntro, typeRoles } from "./content";
+import { theme } from "./docs";
 
 export const metadata = { title: "Haunted Cinema: design system" };
-
-const contents = ["Color roles", "Type roles", "Spacing and shape", "Components", "Control states", "UI states"];
 
 export default function HauntedCinemaSystem() {
   return (
@@ -19,7 +14,7 @@ export default function HauntedCinemaSystem() {
         <h1 className="font-hc-display text-6xl leading-[0.9] md:text-9xl">Haunted Cinema</h1>
         <nav aria-label="Sections" className="mt-10">
           <ol className="flex flex-wrap gap-x-8 gap-y-3">
-            {contents.map((title, i) => (
+            {sectionTitles.map((title, i) => (
               <li key={title} className="flex gap-2">
                 <span className={`${t.label} text-hc-muted`}>{i + 1}</span>
                 <Link href={`#section-${i + 1}`} className={t.label}>{title}</Link>
@@ -28,12 +23,7 @@ export default function HauntedCinemaSystem() {
           </ol>
         </nav>
       </header>
-      <ColorRoles />
-      <TypeRoles />
-      <SpacingShape />
-      <Components />
-      <ControlStates />
-      <UiStatesSection />
+      <DesignSystemSections theme={theme} colorRoles={colorRoles} colorIntro={colorIntro} typeRoles={typeRoles} typeIntro={typeIntro} tokens={tokens} controlNotes={controlNotes} />
     </main>
   );
 }
