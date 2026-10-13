@@ -1,0 +1,108 @@
+/* Pieces of the Neon Arcade library that utility classes cannot express. */
+
+/* In the components layer so utility classes (such as removing the clip on focus) win. */
+@layer components {
+  .nau-theme {
+    --nau-px: 4px;
+  }
+
+  /* Stepped pixel corners: the 4px border stays along the edges and steps at each corner. */
+  .nau-pixel {
+    clip-path: polygon(
+      var(--nau-px) 0, calc(100% - var(--nau-px)) 0, calc(100% - var(--nau-px)) var(--nau-px), 100% var(--nau-px),
+      100% calc(100% - var(--nau-px)), calc(100% - var(--nau-px)) calc(100% - var(--nau-px)),
+      calc(100% - var(--nau-px)) 100%, var(--nau-px) 100%, var(--nau-px) calc(100% - var(--nau-px)),
+      0 calc(100% - var(--nau-px)), 0 var(--nau-px), var(--nau-px) var(--nau-px)
+    );
+  }
+
+  /* The same idea with two steps per corner, for radios. */
+  .nau-octagon {
+    clip-path: polygon(
+      8px 0, calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, 100% 8px,
+      100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px),
+      calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%, 8px 100%, 8px calc(100% - 4px),
+      4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px), 0 8px, 4px 8px, 4px 4px, 8px 4px
+    );
+  }
+
+  /* Offset hard shadow. Sits on a wrapper because clip-path would cut it off. */
+  .nau-shadow {
+    filter: drop-shadow(var(--offset, 6px) var(--offset, 6px) 0 var(--shadow-color, var(--na-muted)));
+  }
+
+  .nau-scanlines {
+    background-image: repeating-linear-gradient(to bottom, transparent 0 2px, rgb(0 0 0 / 0.16) 2px 4px);
+  }
+
+  .nau-grid {
+    background-image:
+      linear-gradient(var(--na-muted) 2px, transparent 2px),
+      linear-gradient(90deg, var(--na-muted) 2px, transparent 2px);
+    background-size: 40px 40px;
+    transform: perspective(220px) rotateX(58deg);
+    transform-origin: 50% 0;
+    mask-image: linear-gradient(to bottom, transparent, black 55%);
+  }
+
+  /* Checkbox, radio and toggle: native inputs, drawn with their pseudo-elements. */
+  .nau-check,
+  .nau-radio,
+  .nau-toggle {
+    position: relative;
+  }
+  .nau-check::before,
+  .nau-radio::before,
+  .nau-radio::after,
+  .nau-toggle::before {
+    content: "";
+    position: absolute;
+  }
+
+  .nau-check::before {
+    inset: 0;
+    background: var(--na-background);
+    opacity: 0;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 8' shape-rendering='crispEdges'%3E%3Cpath d='M1 3h1v2H1zM2 4h1v2H2zM3 5h1v2H3zM4 4h1v2H4zM5 3h1v2H5zM6 2h1v2H6zM7 1h1v2H7z'/%3E%3C/svg%3E") center / 80% no-repeat;
+  }
+  .nau-check:checked::before {
+    opacity: 1;
+  }
+
+  /* A radio is two stacked octagons: the input is the ring, ::before fills it, ::after is the dot. */
+  .nau-radio::before {
+    inset: 4px;
+    background: var(--nau-fill, var(--na-background));
+    clip-path: polygon(4px 0, calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px), 0 4px, 4px 4px);
+  }
+  .nau-radio::after {
+    inset: 10px;
+    background: var(--na-background);
+    opacity: 0;
+  }
+  .nau-radio:checked::after {
+    opacity: 1;
+  }
+
+  .nau-toggle::before {
+    top: 4px;
+    left: 4px;
+    width: 16px;
+    height: 16px;
+    background: var(--na-text);
+    transition: transform 0.1s steps(3);
+  }
+  .nau-toggle:checked::before {
+    background: var(--na-background);
+    transform: translateX(32px);
+  }
+  .nau-toggle:disabled::before {
+    background: var(--na-muted);
+  }
+
+  @keyframes nau-blink {
+    50% {
+      opacity: 0.4;
+    }
+  }
+}

@@ -41,7 +41,7 @@ export const directions: Direction[] = [
     ],
     extras: [{ name: "Dusk", role: "muted", hex: "#9B8FCC" }],
     moodBoardReady: true,
-    designSystemReady: false,
+    designSystemReady: true,
   },
   {
     slug: "liner-notes",

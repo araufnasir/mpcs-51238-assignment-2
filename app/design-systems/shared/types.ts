@@ -59,7 +59,7 @@ export type DocsTheme = {
   cls: {
     /** Muted text color. */
     muted: string;
-    /** Border color for dividers. */
+    /** Top border (width and color) that divides one row from the next. */
     hairline: string;
     /** Border for a swatch. */
     frame: string;

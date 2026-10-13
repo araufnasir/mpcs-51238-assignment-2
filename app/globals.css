@@ -8,6 +8,10 @@
 @custom-variant state-hover (&:is(:hover, [data-force="hover"] *));
 @custom-variant state-focus (&:is(:focus-visible, [data-force="focus"] *));
 @custom-variant state-pressed (&:is(:active, [data-force="pressed"] *));
+/* The same states, read from an ancestor marked "group" (for parts of a control, such as a button's face). */
+@custom-variant group-state-hover (&:is(:where(.group):is(:hover, [data-force="hover"] *) *));
+@custom-variant group-state-focus (&:is(:where(.group):is(:focus-visible, [data-force="focus"] *) *));
+@custom-variant group-state-pressed (&:is(:where(.group):is(:active, [data-force="pressed"] *) *));
 
 /* Haunted Cinema: colors come from app/directions.ts via the board layout. */
 @theme inline {
@@ -31,6 +35,9 @@
   --color-na-accent: var(--na-accent);
   --color-na-secondary: var(--na-secondary);
   --color-na-line: var(--na-line);
+  --color-na-muted: var(--na-muted);
+  --color-na-border: var(--na-muted);
+  --color-na-pressed: color-mix(in srgb, var(--na-text) 14%, var(--na-background));
   --font-na-display: var(--face-na-display), monospace;
   --font-na-body: var(--face-na-body), monospace;
 }

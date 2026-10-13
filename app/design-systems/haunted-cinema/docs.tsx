@@ -37,5 +37,5 @@ export const theme: DocsTheme = {
   demos: { ChipsDemo, PanelDemo, RowsDemo, SearchDemo },
   Section,
   Specimen,
-  cls: { muted: "text-hc-muted", hairline: "border-hc-border", frame: "border-2 border-hc-border", fill: "bg-hc-text" },
+  cls: { muted: "text-hc-muted", hairline: "border-t border-hc-border", frame: "border-2 border-hc-border", fill: "bg-hc-text" },
 };

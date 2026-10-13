@@ -25,7 +25,7 @@ export function ColorRoles({ theme, roles, intro, note }: Props) {
       {note && <p className={`${t.bodySmall} mb-6 max-w-[70ch]`}>{note}</p>}
       <ul>
         {roles.map((role) => (
-          <li key={role.name} className={`grid items-start gap-4 border-t py-6 md:grid-cols-12 md:gap-8 ${theme.cls.hairline}`}>
+          <li key={role.name} className={`grid items-start gap-4 py-6 md:grid-cols-12 md:gap-8 ${theme.cls.hairline}`}>
             <div className={`h-20 md:col-span-2 ${theme.cls.frame}`} style={{ backgroundColor: colorOf(slug, role.swatch) }} />
             <div className="md:col-span-5">
               <h3 className={t.heading}>{role.name}</h3>

@@ -43,7 +43,7 @@ export function ControlStates({ theme, notes }: { theme: DocsTheme; notes: Contr
       name: "List row",
       cells: [rest, hover, focus, pressed, selected, disabled],
       render: ({ selected, disabled }) => (
-        <ul className="w-64">
+        <ul className="w-80">
           <ListRow track={tracks[4]} selected={selected} disabled={disabled} />
         </ul>
       ),
@@ -58,7 +58,7 @@ export function ControlStates({ theme, notes }: { theme: DocsTheme; notes: Contr
     >
       <ul>
         {controls.map(({ name, cells, render }) => (
-          <li key={name} className={`grid gap-4 border-t py-6 md:grid-cols-12 md:gap-8 ${cls.hairline}`}>
+          <li key={name} className={`grid gap-4 py-6 md:grid-cols-12 md:gap-8 ${cls.hairline}`}>
             <div className="md:col-span-3">
               <h3 className={t.label}>{name}</h3>
               <p className={`${t.bodySmall} mt-2 ${cls.muted}`}>{notes[name]}</p>

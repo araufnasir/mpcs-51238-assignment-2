@@ -8,7 +8,7 @@ export function TypeRoles({ theme, roles, intro }: Props) {
     <Section number={2} title="Type roles" intro={intro}>
       <ul>
         {roles.map((role) => (
-          <li key={role.name} className={`grid gap-4 border-t py-6 md:grid-cols-12 md:gap-8 ${cls.hairline}`}>
+          <li key={role.name} className={`grid gap-4 py-6 md:grid-cols-12 md:gap-8 ${cls.hairline}`}>
             <div className="md:col-span-4">
               <h3 className={t.label}>{role.name}</h3>
               <dl className={`${t.bodySmall} mt-3 space-y-1`}>
