@@ -9,7 +9,7 @@ export const textureArtifacts: Artifact[] = [
     span: "md:col-span-4",
     node: (
       <div className={`${tile} bg-hc-surface`}>
-        <div className={`${layer} hc-grain opacity-40`} />
+        <div className={`${layer} hcu-grain opacity-40`} />
       </div>
     ),
   },

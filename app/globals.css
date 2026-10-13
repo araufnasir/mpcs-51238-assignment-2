@@ -1,11 +1,22 @@
 @import "tailwindcss";
 
+/*
+ * State variants. Each matches the real pseudo-class, and also a wrapper with
+ * data-force="...": the design-system pages use that to show a state without interaction.
+ * Declared in this order so pressed overrides focus overrides hover.
+ */
+@custom-variant state-hover (&:is(:hover, [data-force="hover"] *));
+@custom-variant state-focus (&:is(:focus-visible, [data-force="focus"] *));
+@custom-variant state-pressed (&:is(:active, [data-force="pressed"] *));
+
 /* Haunted Cinema: colors come from app/directions.ts via the board layout. */
 @theme inline {
   --color-hc-background: var(--hc-background);
   --color-hc-surface: var(--hc-surface);
   --color-hc-text: var(--hc-text);
   --color-hc-muted: var(--hc-muted);
+  --color-hc-border: var(--hc-muted);
+  --color-hc-pressed: color-mix(in srgb, var(--hc-text) 14%, var(--hc-background));
   --color-hc-accent: var(--hc-accent);
   --font-hc-display: var(--face-hc-display), serif;
   --font-hc-body: var(--face-hc-body), serif;

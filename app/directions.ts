@@ -24,7 +24,7 @@ export const directions: Direction[] = [
       { name: "Blood", role: "accent", hex: "#B3121B" },
     ],
     moodBoardReady: true,
-    designSystemReady: false,
+    designSystemReady: true,
   },
   {
     slug: "neon-arcade",
