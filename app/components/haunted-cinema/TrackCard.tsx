@@ -23,7 +23,7 @@ export function TrackCard({ track, onOpen, selected = false }: Props) {
         <h3 className={t.heading}>{track.title}</h3>
         {track.writtenBy && <p className={`${t.bodySmall} mt-2 text-hc-muted`}>Written by {track.writtenBy}</p>}
       </div>
-      <Button onClick={onOpen} className="self-start">Details</Button>
+      <Button onClick={onOpen} className="mt-auto self-start">Details</Button>
     </article>
   );
 }

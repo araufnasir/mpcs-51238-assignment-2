@@ -33,14 +33,11 @@ export function TrackBrowser() {
   const openTrack = tracks.find((track) => track.number === openNumber);
   const isOpen = Boolean(openTrack);
 
-  // Move focus into the panel when it opens.
-  useEffect(() => {
-    if (isOpen) panelRef.current?.focus();
-  }, [isOpen]);
-
   function open(track: Track, opener: HTMLElement) {
     openerRef.current = opener;
     setOpenNumber(track.number);
+    // Move focus into the panel, whether it was closed or already showing another track.
+    requestAnimationFrame(() => panelRef.current?.focus());
   }
 
   function close() {
@@ -118,7 +115,7 @@ export function TrackBrowser() {
         <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
           {shown.map((track) => (
             <li key={track.number} data-track={track.number} className="flex">
-              <div className="w-full">
+              <div className="w-full [&>article]:h-full">
                 <TrackCard track={track} selected={track.number === openNumber} onOpen={() => open(track, document.activeElement as HTMLElement)} />
               </div>
             </li>
