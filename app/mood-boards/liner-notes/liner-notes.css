@@ -1,0 +1,347 @@
+/* Textures and control states for the Liner Notes board. Square corners, no shadows, no glow. */
+
+.ln-smallcaps {
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+}
+
+/* Paper tooth: faint speckle, printed in ink */
+.ln-tooth {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .14 0 0 0 0 .11 0 0 0 0 .09 1.4 0 0 0 -.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Gatefold crease */
+.ln-crease {
+  background-image: linear-gradient(
+    90deg,
+    transparent 38%,
+    color-mix(in srgb, var(--ln-text) 6%, transparent) 48.5%,
+    color-mix(in srgb, var(--ln-text) 24%, transparent) 50%,
+    color-mix(in srgb, var(--ln-text) 3%, transparent) 51.5%,
+    transparent 62%
+  );
+}
+
+/* Offset-print dot screens. --dot sets the spacing and --ink the color. */
+.ln-screen {
+  background-image:
+    radial-gradient(circle, var(--ink) 1.3px, transparent 1.7px),
+    radial-gradient(circle, var(--ink) 1.3px, transparent 1.7px);
+  background-size: var(--dot) var(--dot);
+  background-position: 0 0, calc(var(--dot) / 2) calc(var(--dot) / 2);
+}
+
+/* Buttons */
+.ln-btn {
+  border: 1px solid var(--ln-text);
+  padding: 0.6rem 1.4rem;
+  font-family: inherit;
+  font-size: 1.125rem;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.1em;
+  color: var(--ln-text);
+  background: transparent;
+  cursor: pointer;
+}
+.ln-btn--primary {
+  border-color: var(--ln-accent);
+  background: var(--ln-accent);
+  color: var(--ln-background);
+}
+.ln-btn--primary:hover:not(:disabled),
+.ln-btn--primary.is-hover {
+  background: color-mix(in srgb, var(--ln-accent) 80%, black);
+  border-color: color-mix(in srgb, var(--ln-accent) 80%, black);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.ln-btn--primary:active:not(:disabled),
+.ln-btn--primary.is-pressed {
+  background: color-mix(in srgb, var(--ln-accent) 60%, black);
+  border-color: color-mix(in srgb, var(--ln-accent) 60%, black);
+  transform: translateY(1px);
+}
+.ln-btn--secondary:hover:not(:disabled),
+.ln-btn--secondary.is-hover {
+  background: var(--ln-text);
+  color: var(--ln-background);
+}
+.ln-btn--secondary:active:not(:disabled),
+.ln-btn--secondary.is-pressed {
+  background: color-mix(in srgb, var(--ln-text) 80%, var(--ln-background));
+  color: var(--ln-background);
+  transform: translateY(1px);
+}
+.ln-btn:focus-visible,
+.ln-btn.is-focus {
+  outline: 2px solid var(--ln-text);
+  outline-offset: 3px;
+}
+.ln-btn:disabled {
+  border: 1px dotted var(--ln-muted);
+  background: transparent;
+  color: var(--ln-muted);
+  cursor: not-allowed;
+}
+
+/* Text link */
+.ln-link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+.ln-link:hover:not(.is-disabled),
+.ln-link.is-hover {
+  color: var(--ln-accent);
+}
+.ln-link:active:not(.is-disabled),
+.ln-link.is-pressed {
+  color: color-mix(in srgb, var(--ln-accent) 60%, black);
+}
+.ln-link:focus-visible,
+.ln-link.is-focus {
+  outline: 2px solid var(--ln-text);
+  outline-offset: 3px;
+}
+.ln-link.is-disabled {
+  color: var(--ln-muted);
+  text-decoration-style: dotted;
+  cursor: not-allowed;
+}
+
+/* Text input: a ruled line, like a form on paper */
+.ln-input {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--ln-text);
+  background: transparent;
+  padding: 0.4rem 0.25rem;
+  font-family: inherit;
+  font-size: 1.125rem;
+  color: var(--ln-text);
+}
+.ln-input::placeholder {
+  font-style: italic;
+  color: var(--ln-muted);
+}
+.ln-input:hover:not(:disabled),
+.ln-input.is-hover {
+  background: var(--ln-surface);
+}
+.ln-input:focus-visible,
+.ln-input.is-focus {
+  outline: 2px solid var(--ln-text);
+  outline-offset: 2px;
+  background: var(--ln-surface);
+}
+.ln-input:disabled {
+  border-bottom-style: dotted;
+  border-bottom-color: var(--ln-muted);
+  cursor: not-allowed;
+}
+
+/* Checkbox and radio: a hidden native input drives a ruled box */
+.ln-check {
+  display: inline-flex;
+  cursor: pointer;
+}
+.ln-box {
+  position: relative;
+  display: block;
+  width: 1.375rem;
+  height: 1.375rem;
+  border: 1px solid var(--ln-text);
+  background: var(--ln-background);
+}
+.ln-box--radio,
+.ln-box--radio::after {
+  border-radius: 50%;
+}
+.ln-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ln-background);
+  opacity: 0;
+}
+.ln-box--check::after {
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5 6.5 12 13 4.5' fill='none' stroke='black' stroke-width='1.6'/%3E%3C/svg%3E") center / 80% no-repeat;
+}
+.ln-box--radio::after {
+  inset: 5px;
+}
+.ln-check:hover .ln-box,
+.ln-box.is-hover {
+  background: var(--ln-surface);
+}
+.ln-check:active .ln-box,
+.ln-box.is-pressed {
+  background: color-mix(in srgb, var(--ln-text) 15%, var(--ln-background));
+}
+.ln-check input:checked + .ln-box {
+  background: var(--ln-text);
+}
+.ln-check input:checked + .ln-box::after {
+  opacity: 1;
+}
+.ln-check input:focus-visible + .ln-box,
+.ln-box.is-focus {
+  outline: 2px solid var(--ln-text);
+  outline-offset: 3px;
+}
+.ln-check input:disabled + .ln-box {
+  border-style: dotted;
+  border-color: var(--ln-muted);
+  cursor: not-allowed;
+}
+
+/* Toggle */
+.ln-toggle {
+  position: relative;
+  width: 2.75rem;
+  height: 1.5rem;
+  border: 1px solid var(--ln-text);
+  background: var(--ln-background);
+  cursor: pointer;
+}
+.ln-toggle::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 1rem;
+  height: 1rem;
+  background: var(--ln-text);
+}
+.ln-toggle[aria-checked="true"] {
+  background: var(--ln-text);
+}
+.ln-toggle[aria-checked="true"]::after {
+  left: calc(100% - 1rem - 3px);
+  background: var(--ln-background);
+}
+.ln-toggle:hover:not(:disabled),
+.ln-toggle.is-hover {
+  background: var(--ln-surface);
+}
+.ln-toggle[aria-checked="true"]:hover:not(:disabled),
+.ln-toggle[aria-checked="true"].is-hover {
+  background: color-mix(in srgb, var(--ln-text) 85%, var(--ln-background));
+}
+.ln-toggle:active:not(:disabled),
+.ln-toggle.is-pressed {
+  background: color-mix(in srgb, var(--ln-text) 15%, var(--ln-background));
+}
+.ln-toggle:focus-visible,
+.ln-toggle.is-focus {
+  outline: 2px solid var(--ln-text);
+  outline-offset: 3px;
+}
+.ln-toggle:disabled {
+  border-style: dotted;
+  border-color: var(--ln-muted);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Filter chips and tabs */
+.ln-chip {
+  border: 1px solid var(--ln-text);
+  padding: 0.2rem 0.9rem;
+  font-family: inherit;
+  font-size: 1.0625rem;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+  color: var(--ln-text);
+  background: transparent;
+  cursor: pointer;
+}
+.ln-chip:hover:not(:disabled),
+.ln-chip.is-hover {
+  background: var(--ln-surface);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.ln-chip:active:not(:disabled),
+.ln-chip.is-pressed {
+  background: color-mix(in srgb, var(--ln-text) 15%, var(--ln-background));
+}
+.ln-chip:focus-visible,
+.ln-chip.is-focus {
+  outline: 2px solid var(--ln-text);
+  outline-offset: 3px;
+}
+.ln-chip[aria-pressed="true"],
+.ln-chip[aria-selected="true"] {
+  background: var(--ln-text);
+  color: var(--ln-background);
+}
+.ln-chip:disabled {
+  border-style: dotted;
+  border-color: var(--ln-muted);
+  color: var(--ln-muted);
+  cursor: not-allowed;
+}
+
+.ln-tab {
+  border: 0;
+  border-bottom: 1px solid var(--ln-muted);
+  padding: 0.4rem 1rem;
+  font-family: inherit;
+  font-size: 1.125rem;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+  color: var(--ln-text);
+  background: transparent;
+  cursor: pointer;
+}
+.ln-tab:hover:not(:disabled),
+.ln-tab.is-hover {
+  border-bottom-color: var(--ln-text);
+  background: var(--ln-surface);
+}
+.ln-tab:active:not(:disabled),
+.ln-tab.is-pressed {
+  background: color-mix(in srgb, var(--ln-text) 15%, var(--ln-background));
+}
+.ln-tab:focus-visible,
+.ln-tab.is-focus {
+  outline: 2px solid var(--ln-text);
+  outline-offset: -2px;
+}
+.ln-tab[aria-selected="true"] {
+  border-bottom: 3px solid var(--ln-text);
+  font-weight: 600;
+}
+.ln-tab:disabled {
+  color: var(--ln-muted);
+  border-bottom-style: dotted;
+  cursor: not-allowed;
+}
+
+/* Track list rows */
+.ln-row {
+  border-left: 3px solid transparent;
+}
+.ln-row:hover,
+.ln-row.is-hover {
+  background: var(--ln-surface);
+}
+.ln-row:hover .ln-row-title,
+.ln-row.is-hover .ln-row-title {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+.ln-row:active,
+.ln-row.is-pressed {
+  background: color-mix(in srgb, var(--ln-text) 12%, var(--ln-background));
+}
+.ln-row.is-selected {
+  border-left-color: var(--ln-text);
+  background: var(--ln-surface);
+}
+.ln-row.is-selected .ln-row-title {
+  font-style: italic;
+}

@@ -23,3 +23,13 @@
   --font-na-display: var(--face-na-display), monospace;
   --font-na-body: var(--face-na-body), monospace;
 }
+
+/* Liner Notes */
+@theme inline {
+  --color-ln-background: var(--ln-background);
+  --color-ln-surface: var(--ln-surface);
+  --color-ln-text: var(--ln-text);
+  --color-ln-muted: var(--ln-muted);
+  --color-ln-accent: var(--ln-accent);
+  --font-ln: var(--face-ln), serif;
+}

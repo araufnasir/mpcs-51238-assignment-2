@@ -51,7 +51,7 @@ export const directions: Direction[] = [
       { name: "Rule", role: "muted", hex: "#6E6254" },
       { name: "Oxblood", role: "accent", hex: "#8C2F1B" },
     ],
-    moodBoardReady: false,
+    moodBoardReady: true,
     designSystemReady: false,
   },
 ];
