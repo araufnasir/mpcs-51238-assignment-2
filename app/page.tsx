@@ -1,86 +1,80 @@
 import Link from "next/link";
 import { directions } from "./directions";
+import type { Direction } from "./directions";
 
-type Destination = { label: string; href: string; ready: boolean; palette?: string[] };
+const focusRing = "focus-visible:outline-2 focus-visible:outline-offset-2";
 
-const mark = "block py-3 text-xl font-medium";
-
-function Entry({ label, href, ready, palette }: Destination) {
+function Strip({ palette }: Pick<Direction, "palette">) {
   return (
-    <li className="border-b border-neutral-300">
-      {ready ? (
-        <Link
-          href={href}
-          className={`${mark} flex items-center gap-4 underline-offset-4 hover:bg-neutral-900 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 active:bg-neutral-700 active:text-white`}
-        >
-          <Strip palette={palette} />
-          {label}
-        </Link>
-      ) : (
-        <span aria-disabled="true" className={`${mark} flex items-center gap-4 text-neutral-400`}>
-          <Strip palette={palette} />
-          {label}
-        </span>
-      )}
-    </li>
-  );
-}
-
-function Strip({ palette }: { palette?: string[] }) {
-  if (!palette) return null;
-  return (
-    <span aria-hidden className="flex h-6 w-24 shrink-0 overflow-hidden border border-neutral-300">
-      {palette.map((hex) => (
-        <span key={hex} className="flex-1" style={{ backgroundColor: hex }} />
+    <span aria-hidden className="flex h-8 overflow-hidden border border-neutral-300">
+      {palette.map((s) => (
+        <span key={s.hex} className="flex-1" style={{ backgroundColor: s.hex }} />
       ))}
     </span>
   );
 }
 
-function Section({ number, title, entries }: { number: number; title: string; entries: Destination[] }) {
+function Column({ direction, href, label, ready }: { direction: Direction; href: string; label: string; ready: boolean }) {
+  const text = `${label} →`;
+  return (
+    <li className="flex flex-col gap-3">
+      <Strip palette={direction.palette} />
+      <div className={ready ? "" : "text-neutral-400"}>
+        <h3 className="text-xl font-bold">{direction.name}</h3>
+        <p>{direction.feel.join(" · ")}</p>
+      </div>
+      {ready ? (
+        <Link
+          href={href}
+          className={`self-start font-medium underline underline-offset-4 hover:bg-neutral-900 hover:text-white active:bg-neutral-700 active:text-white ${focusRing}`}
+        >
+          {text}
+        </Link>
+      ) : (
+        <span aria-disabled="true" className="self-start text-neutral-400">{text}</span>
+      )}
+    </li>
+  );
+}
+
+function Section({ number, title, children }: { number: number; title: string; children: React.ReactNode }) {
   return (
     <section className="mt-12">
       <h2 className="flex items-baseline gap-3 border-b-2 border-neutral-900 pb-2 text-2xl font-bold">
         <span className="text-neutral-600">{number}</span>
         {title}
       </h2>
-      <ul>
-        {entries.map((e) => (
-          <Entry key={e.href} {...e} />
-        ))}
-      </ul>
+      {children}
     </section>
   );
 }
 
-const withPalette = (d: (typeof directions)[number]) => d.palette.map((s) => s.hex);
+const Row = ({ children }: { children: React.ReactNode }) => (
+  <ul className="mt-6 grid grid-cols-1 gap-8 md:grid-cols-3">{children}</ul>
+);
 
 export default function Hub() {
   return (
-    <main className="mx-auto max-w-3xl px-6 py-12 text-neutral-900 md:py-20">
+    <main className="mx-auto max-w-5xl px-6 py-12 text-neutral-900 md:py-20">
       <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Thriller: a tribute</h1>
 
-      <Section
-        number={1}
-        title="Mood Boards"
-        entries={directions.map((d) => ({
-          label: d.name,
-          href: `/mood-boards/${d.slug}`,
-          ready: d.moodBoardReady,
-          palette: withPalette(d),
-        }))}
-      />
-      <Section
-        number={2}
-        title="Design Systems"
-        entries={directions.map((d) => ({
-          label: d.name,
-          href: `/design-systems/${d.slug}`,
-          ready: d.designSystemReady,
-          palette: withPalette(d),
-        }))}
-      />
-      <Section number={3} title="Your Site" entries={[{ label: "Thriller", href: "/thriller", ready: false }]} />
+      <Section number={1} title="Mood Boards">
+        <Row>
+          {directions.map((d) => (
+            <Column key={d.slug} direction={d} href={`/mood-boards/${d.slug}`} label="Mood board" ready={d.moodBoardReady} />
+          ))}
+        </Row>
+      </Section>
+      <Section number={2} title="Design Systems">
+        <Row>
+          {directions.map((d) => (
+            <Column key={d.slug} direction={d} href={`/design-systems/${d.slug}`} label="Design system" ready={d.designSystemReady} />
+          ))}
+        </Row>
+      </Section>
+      <Section number={3} title="Your Site">
+        <p className="mt-4 text-xl font-medium text-neutral-400" aria-disabled="true">Thriller →</p>
+      </Section>
     </main>
   );
 }
