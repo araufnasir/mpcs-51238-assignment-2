@@ -30,7 +30,7 @@ export type Kit = {
   TrackCard: ComponentType<{ track: Track; onOpen?: () => void; selected?: boolean }>;
   ListRow: ComponentType<ButtonHTMLAttributes<HTMLButtonElement> & { track: Track; selected?: boolean }>;
   DetailPanel: ComponentType<{ track: Track; onClose?: () => void; onNext?: () => void }>;
-  EmptyState: ComponentType<Notice>;
+  EmptyState: ComponentType<Notice & { art?: ReactNode }>;
   LoadingState: ComponentType<{ label: string }>;
   ErrorState: ComponentType<Notice>;
   SuccessState: ComponentType<Notice>;

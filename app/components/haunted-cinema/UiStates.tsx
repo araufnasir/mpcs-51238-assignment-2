@@ -5,14 +5,16 @@ type Props = { title: string; children?: ReactNode; action?: ReactNode };
 
 const icon = "size-10 shrink-0";
 
-/** Nothing to show: a dashed frame, so it reads as a gap and not as content. */
-export function EmptyState({ title, children, action }: Props) {
+/** Nothing to show: a dashed frame, so it reads as a gap and not as content. `art` replaces the default icon. */
+export function EmptyState({ title, children, action, art }: Props & { art?: ReactNode }) {
   return (
     <div className="flex flex-col items-center gap-3 border-2 border-dashed border-hc-border p-8 text-center">
-      <svg aria-hidden viewBox="0 0 40 40" className={`${icon} text-hc-muted`} fill="none" stroke="currentColor" strokeWidth="2">
-        <rect x="5" y="9" width="30" height="22" strokeDasharray="4 3" />
-        <path d="M5 9 20 22 35 9" />
-      </svg>
+      {art ?? (
+        <svg aria-hidden viewBox="0 0 40 40" className={`${icon} text-hc-muted`} fill="none" stroke="currentColor" strokeWidth="2">
+          <rect x="5" y="9" width="30" height="22" strokeDasharray="4 3" />
+          <path d="M5 9 20 22 35 9" />
+        </svg>
+      )}
       <h3 className={t.heading}>{title}</h3>
       {children && <p className={`${t.body} max-w-[40ch] text-hc-muted`}>{children}</p>}
       {action}

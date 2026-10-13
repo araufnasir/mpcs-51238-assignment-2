@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Button, DetailPanel, EmptyState, FilterChip, SearchField, TrackCard, type as t } from "../components/haunted-cinema";
+import { Bats, Button, DetailPanel, EmptyState, FilterChip, SearchField, TrackCard, type as t } from "../components/haunted-cinema";
 import { tracks, type Track } from "../data/tracks";
 
 const filters = [
@@ -122,7 +122,7 @@ export function TrackBrowser() {
           ))}
         </ul>
       ) : (
-        <EmptyState title="No tracks found" action={<Button onClick={clearAll}>Clear search and filter</Button>}>
+        <EmptyState title="No tracks found" art={<Bats tone="quiet" decorative className="h-20 w-auto opacity-50" />} action={<Button onClick={clearAll}>Clear search and filter</Button>}>
           {query.trim() ? <>Nothing matches &ldquo;{query.trim()}&rdquo;{filterId === "all" ? "" : ` in ${filter.label.toLowerCase()}`}.</> : "Nothing in this filter."}
         </EmptyState>
       )}
