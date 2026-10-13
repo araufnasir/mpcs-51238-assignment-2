@@ -1,4 +1,4 @@
-import type { Artifact } from "./types";
+import type { Artifact } from "../../../lib/artifact";
 
 const tile = "relative h-44 overflow-hidden";
 const layer = "absolute inset-0";

@@ -1,17 +1,10 @@
 import { colorOf, findDirection } from "../../../directions";
-import { contrast, verdict } from "../../../lib/contrast";
+import { contrast, readableOn, verdict } from "../../../lib/contrast";
 import type { Role } from "../../../directions";
-import type { Artifact } from "./types";
+import type { Artifact } from "../../../lib/artifact";
 
 const SLUG = "haunted-cinema";
 const { palette } = findDirection(SLUG);
-
-/** Picks the palette's text or background color, whichever reads better on `hex`. */
-function readableOn(hex: string): string {
-  const light = colorOf(SLUG, "text");
-  const dark = colorOf(SLUG, "background");
-  return contrast(hex, dark) > contrast(hex, light) ? dark : light;
-}
 
 const pairs: [Role, Role][] = [
   ["text", "background"],
@@ -46,7 +39,7 @@ export const colorArtifacts: Artifact[] = [
           <div
             key={s.hex}
             className="flex h-56 flex-col justify-end p-3"
-            style={{ backgroundColor: s.hex, color: readableOn(s.hex) }}
+            style={{ backgroundColor: s.hex, color: readableOn(s.hex, colorOf(SLUG, "text"), colorOf(SLUG, "background")) }}
           >
             <p className="font-hc-display text-xl">{s.name}</p>
             <p className="font-hc-label text-xs uppercase tracking-widest">{s.hex}</p>

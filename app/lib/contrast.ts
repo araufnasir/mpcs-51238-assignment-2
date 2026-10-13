@@ -18,3 +18,8 @@ export function verdict(ratio: number): string {
   if (ratio >= 3) return "Large text only";
   return "Fills only, no text";
 }
+
+/** Whichever of `a` or `b` reads better on `hex`. */
+export function readableOn(hex: string, a: string, b: string): string {
+  return contrast(hex, a) > contrast(hex, b) ? a : b;
+}

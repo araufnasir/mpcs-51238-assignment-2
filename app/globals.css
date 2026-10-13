@@ -11,3 +11,15 @@
   --font-hc-body: var(--face-hc-body), serif;
   --font-hc-label: var(--face-hc-label), sans-serif;
 }
+
+/* Neon Arcade */
+@theme inline {
+  --color-na-background: var(--na-background);
+  --color-na-surface: var(--na-surface);
+  --color-na-text: var(--na-text);
+  --color-na-accent: var(--na-accent);
+  --color-na-secondary: var(--na-secondary);
+  --color-na-line: var(--na-line);
+  --font-na-display: var(--face-na-display), monospace;
+  --font-na-body: var(--face-na-body), monospace;
+}

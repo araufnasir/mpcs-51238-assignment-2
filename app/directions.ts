@@ -37,7 +37,7 @@ export const directions: Direction[] = [
       { name: "Magenta", role: "accent", hex: "#FF2E93" },
       { name: "Cyan", role: "secondary", hex: "#2EE6F0" },
     ],
-    moodBoardReady: false,
+    moodBoardReady: true,
     designSystemReady: false,
   },
   {

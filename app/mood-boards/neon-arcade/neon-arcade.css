@@ -1,0 +1,319 @@
+/* Textures, pixel shapes and control states for the Neon Arcade board. */
+
+.na {
+  --px: 4px;
+  /* Derived from the palette: edges of panels, and the hard shadow under them. */
+  --na-line: color-mix(in srgb, var(--na-text) 30%, var(--na-surface));
+  --na-shadow: color-mix(in srgb, var(--na-background) 35%, black);
+}
+
+/* Stepped pixel corners. The 4px border stays along the edges and steps at each corner. */
+.na-pixel,
+.na-face,
+.na-chip,
+.na-input,
+.na-check-box,
+.na-toggle {
+  clip-path: polygon(
+    var(--px) 0, calc(100% - var(--px)) 0, calc(100% - var(--px)) var(--px), 100% var(--px),
+    100% calc(100% - var(--px)), calc(100% - var(--px)) calc(100% - var(--px)),
+    calc(100% - var(--px)) 100%, var(--px) 100%, var(--px) calc(100% - var(--px)),
+    0 calc(100% - var(--px)), 0 var(--px), var(--px) var(--px)
+  );
+}
+
+/* Offset hard shadow. Sits on a wrapper because clip-path would cut it off. */
+.na-shadow {
+  filter: drop-shadow(var(--offset, 6px) var(--offset, 6px) 0 var(--shadow-color, var(--na-shadow)));
+}
+
+/* Screen overlay */
+.na-scanlines {
+  background-image: repeating-linear-gradient(to bottom, transparent 0 2px, rgb(0 0 0 / 0.16) 2px 4px);
+}
+
+/* Perspective grid floor */
+.na-grid {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--na-accent) 70%, transparent) 2px, transparent 2px),
+    linear-gradient(90deg, color-mix(in srgb, var(--na-accent) 70%, transparent) 2px, transparent 2px);
+  background-size: 40px 40px;
+  transform: perspective(220px) rotateX(58deg);
+  transform-origin: 50% 0;
+  mask-image: linear-gradient(to bottom, transparent, black 55%);
+}
+
+/* Dither ramp: the same color at falling densities, no smooth blur. */
+.na-dither {
+  background: var(--na-text);
+  mask-size: var(--tile) var(--tile);
+}
+.na-dither--half {
+  --tile: 8px;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='4' height='4'/%3E%3Crect x='4' y='4' width='4' height='4'/%3E%3C/svg%3E");
+}
+.na-dither--quarter {
+  --tile: 8px;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='4' height='4'/%3E%3C/svg%3E");
+}
+.na-dither--sparse {
+  --tile: 16px;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='4' height='4'/%3E%3C/svg%3E");
+}
+
+/* Starfield: square stars, colored through the mask */
+.na-stars {
+  background: var(--na-text);
+  mask-size: 120px 120px;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect x='10' y='14' width='3' height='3'/%3E%3Crect x='46' y='6' width='2' height='2'/%3E%3Crect x='88' y='22' width='3' height='3'/%3E%3Crect x='28' y='58' width='2' height='2'/%3E%3Crect x='66' y='50' width='3' height='3'/%3E%3Crect x='104' y='74' width='2' height='2'/%3E%3Crect x='14' y='98' width='3' height='3'/%3E%3Crect x='58' y='104' width='2' height='2'/%3E%3Crect x='92' y='108' width='3' height='3'/%3E%3C/svg%3E");
+}
+
+/* LED dot matrix */
+.na-dots {
+  background-image: radial-gradient(circle, var(--na-line) 38%, transparent 42%);
+  background-size: 10px 10px;
+}
+
+/* Buttons. The face is clipped; the button carries the hard shadow. */
+.na-btn {
+  --offset: 4px;
+  --shadow-color: var(--na-text);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  filter: drop-shadow(var(--offset) var(--offset) 0 var(--shadow-color));
+}
+.na-btn--primary {
+  /* The one glow on the board. */
+  filter: drop-shadow(var(--offset) var(--offset) 0 var(--shadow-color))
+    drop-shadow(0 0 12px color-mix(in srgb, var(--na-accent) 70%, transparent));
+}
+.na-btn--secondary {
+  --shadow-color: var(--na-line);
+}
+.na-face {
+  display: block;
+  border: 4px solid var(--na-text);
+  padding: 0.75rem 1.25rem;
+  font-family: var(--face-na-body), monospace;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.na-btn--primary .na-face {
+  background: var(--na-accent);
+  color: var(--na-background);
+}
+.na-btn--secondary .na-face {
+  background: var(--na-background);
+  color: var(--na-text);
+}
+/* The is-* classes freeze a state so the board can show all of them at once. */
+.na-btn:hover:not(:disabled),
+.na-btn.is-hover {
+  --offset: 7px;
+  transform: translate(-3px, -3px);
+}
+.na-btn:active:not(:disabled),
+.na-btn.is-pressed {
+  --offset: 0px;
+  transform: translate(4px, 4px);
+}
+.na-btn--primary:active:not(:disabled) .na-face,
+.na-btn--primary.is-pressed .na-face {
+  background: color-mix(in srgb, var(--na-accent) 70%, black);
+}
+.na-btn--secondary:active:not(:disabled) .na-face,
+.na-btn--secondary.is-pressed .na-face {
+  background: var(--na-line);
+}
+.na-btn:focus-visible,
+.na-btn.is-focus {
+  outline: 4px solid var(--na-secondary);
+  outline-offset: 6px;
+}
+.na-btn:disabled {
+  --offset: 0px;
+  filter: none;
+  cursor: not-allowed;
+}
+.na-btn:disabled .na-face {
+  border: 4px dashed var(--na-line);
+  background: transparent;
+  color: color-mix(in srgb, var(--na-text) 50%, var(--na-background));
+}
+
+/* Chips. Clipped elements cannot show an outline, so focus recolors the border. */
+.na-chip {
+  border: 4px solid var(--na-line);
+  background: var(--na-background);
+  padding: 0.25rem 0.75rem;
+  font-family: var(--face-na-body), monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--na-text);
+  cursor: pointer;
+}
+.na-chip:hover:not(:disabled),
+.na-chip.is-hover {
+  border-color: var(--na-text);
+}
+.na-chip:active:not(:disabled),
+.na-chip.is-pressed {
+  background: var(--na-line);
+}
+.na-chip:focus-visible,
+.na-chip.is-focus {
+  outline: none;
+  border-color: var(--na-secondary);
+}
+.na-chip[aria-pressed="true"] {
+  border-color: var(--na-text);
+  background: var(--na-text);
+  color: var(--na-background);
+}
+.na-chip:disabled {
+  border-style: dashed;
+  color: color-mix(in srgb, var(--na-text) 50%, var(--na-background));
+  cursor: not-allowed;
+}
+
+/* Text input */
+.na-input {
+  width: 100%;
+  border: 4px solid var(--na-line);
+  background: var(--na-background);
+  padding: 0.5rem 0.75rem;
+  font-family: var(--face-na-body), monospace;
+  color: var(--na-text);
+}
+.na-input::placeholder {
+  color: color-mix(in srgb, var(--na-text) 60%, var(--na-background));
+}
+.na-input:hover:not(:disabled),
+.na-input.is-hover {
+  border-color: var(--na-text);
+}
+.na-input:focus-visible,
+.na-input.is-focus {
+  outline: none;
+  border-color: var(--na-secondary);
+}
+.na-input:disabled {
+  border-style: dashed;
+  cursor: not-allowed;
+}
+
+/* Checkbox: a hidden native input drives a pixel box */
+.na-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+.na-check-box {
+  position: relative;
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 4px solid var(--na-line);
+  background: var(--na-background);
+}
+.na-check-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--na-background);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 8'%3E%3Cpath d='M1 3h1v2H1zM2 4h1v2H2zM3 5h1v2H3zM4 4h1v2H4zM5 3h1v2H5zM6 2h1v2H6zM7 1h1v2H7z'/%3E%3C/svg%3E") center / 80% no-repeat;
+  opacity: 0;
+}
+.na-check:hover .na-check-box,
+.na-check-box.is-hover {
+  border-color: var(--na-text);
+}
+.na-check:active .na-check-box,
+.na-check-box.is-pressed {
+  background: var(--na-line);
+}
+.na-check input:checked + .na-check-box {
+  border-color: var(--na-text);
+  background: var(--na-text);
+}
+.na-check input:checked + .na-check-box::after {
+  opacity: 1;
+}
+.na-check input:focus-visible + .na-check-box,
+.na-check-box.is-focus {
+  border-color: var(--na-secondary);
+}
+.na-check input:disabled + .na-check-box {
+  border-style: dashed;
+  opacity: 0.5;
+}
+
+/* Toggle */
+.na-toggle {
+  position: relative;
+  width: 3.5rem;
+  height: 2rem;
+  border: 4px solid var(--na-line);
+  background: var(--na-background);
+  cursor: pointer;
+}
+.na-toggle::after {
+  content: "";
+  position: absolute;
+  top: 0.125rem;
+  left: 0.125rem;
+  width: 1rem;
+  height: 1rem;
+  background: var(--na-text);
+}
+.na-toggle[aria-checked="true"] {
+  border-color: var(--na-text);
+  background: var(--na-text);
+}
+.na-toggle[aria-checked="true"]::after {
+  left: 1.625rem;
+  background: var(--na-background);
+}
+.na-toggle:hover:not(:disabled),
+.na-toggle.is-hover {
+  border-color: var(--na-text);
+}
+.na-toggle:active:not(:disabled),
+.na-toggle.is-pressed {
+  background: var(--na-line);
+}
+.na-toggle:focus-visible,
+.na-toggle.is-focus {
+  outline: none;
+  border-color: var(--na-secondary);
+}
+.na-toggle:disabled {
+  border-style: dashed;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Track list rows */
+.na-row {
+  border-left: 4px solid transparent;
+}
+.na-row:hover,
+.na-row.is-hover {
+  border-left-color: var(--na-text);
+  background: var(--na-background);
+}
+.na-row:active,
+.na-row.is-pressed {
+  background: color-mix(in srgb, var(--na-text) 12%, var(--na-surface));
+}
+.na-row.is-selected {
+  border-left-color: var(--na-secondary);
+  background: var(--na-background);
+}

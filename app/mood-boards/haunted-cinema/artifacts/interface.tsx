@@ -1,4 +1,4 @@
-import type { Artifact } from "./types";
+import type { Artifact } from "../../../lib/artifact";
 
 const buttonStates = [
   { label: "Rest", cls: "" },

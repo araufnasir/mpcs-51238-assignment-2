@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { Artifact } from "./types";
+import type { Artifact } from "../../../lib/artifact";
 
 type Props = { viewBox: string; label: string; children: ReactNode };
 
