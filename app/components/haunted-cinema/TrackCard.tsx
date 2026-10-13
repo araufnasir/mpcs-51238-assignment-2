@@ -15,7 +15,7 @@ export function TrackCard({ track, onOpen, selected = false }: Props) {
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className={`${t.labelSmall} text-hc-muted`}>Track</p>
-          <p className="font-hc-display text-6xl leading-none">{track.number}</p>
+          <p className="font-hc-display text-[2.625rem] leading-none">{track.number}</p>
         </div>
         {track.single && <Badge>Single</Badge>}
       </div>

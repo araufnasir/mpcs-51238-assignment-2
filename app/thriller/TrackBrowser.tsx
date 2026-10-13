@@ -73,7 +73,7 @@ export function TrackBrowser() {
   }
 
   return (
-    <div className="mt-10 space-y-8">
+    <div className="mt-6 space-y-6">
       <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
         <div className="md:w-full md:max-w-md">
           <SearchField
