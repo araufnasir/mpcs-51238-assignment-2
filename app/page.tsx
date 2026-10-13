@@ -1,53 +1,86 @@
 import Link from "next/link";
 import { directions } from "./directions";
 
-function Destination({ label, href, ready }: { label: string; href: string; ready: boolean }) {
-  if (!ready) return <span className="text-neutral-600">{label}: not built yet</span>;
+type Destination = { label: string; href: string; ready: boolean; palette?: string[] };
+
+const mark = "block py-3 text-xl font-medium";
+
+function Entry({ label, href, ready, palette }: Destination) {
   return (
-    <Link
-      href={href}
-      className="font-medium underline underline-offset-4 hover:bg-neutral-900 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 active:bg-neutral-700 active:text-white"
-    >
-      {label} →
-    </Link>
+    <li className="border-b border-neutral-300">
+      {ready ? (
+        <Link
+          href={href}
+          className={`${mark} flex items-center gap-4 underline-offset-4 hover:bg-neutral-900 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 active:bg-neutral-700 active:text-white`}
+        >
+          <Strip palette={palette} />
+          {label}
+        </Link>
+      ) : (
+        <span aria-disabled="true" className={`${mark} flex items-center gap-4 text-neutral-400`}>
+          <Strip palette={palette} />
+          {label}
+        </span>
+      )}
+    </li>
   );
 }
 
-export default function Hub() {
+function Strip({ palette }: { palette?: string[] }) {
+  if (!palette) return null;
   return (
-    <main className="mx-auto max-w-4xl px-6 py-12 text-neutral-900 md:py-20">
-      <h1 className="text-4xl font-bold tracking-tight md:text-6xl">Thriller: a tribute</h1>
-      <p className="mt-4 max-w-xl text-lg leading-relaxed">
-        A small static site for the 1982 album, explored in three visual directions. Each has a mood
-        board and a design system. The site itself comes after one is chosen.
-      </p>
+    <span aria-hidden className="flex h-6 w-24 shrink-0 overflow-hidden border border-neutral-300">
+      {palette.map((hex) => (
+        <span key={hex} className="flex-1" style={{ backgroundColor: hex }} />
+      ))}
+    </span>
+  );
+}
 
-      <ul className="mt-12 border-t-2 border-neutral-900">
-        {directions.map((d) => (
-          <li
-            key={d.slug}
-            className="grid gap-4 border-b border-neutral-300 py-6 md:grid-cols-[10rem_1fr_auto] md:items-center md:gap-8"
-          >
-            <div className="flex h-10 overflow-hidden rounded-sm border border-neutral-300" role="img" aria-label={`${d.name} palette`}>
-              {d.palette.map((s) => (
-                <span key={s.hex} className="flex-1" style={{ backgroundColor: s.hex }} />
-              ))}
-            </div>
-            <div>
-              <h2 className="text-xl font-bold">{d.name}</h2>
-              <p className="text-neutral-600">{d.feel.join(" · ")}</p>
-            </div>
-            <div className="flex flex-col gap-1 md:items-end">
-              <Destination label="Mood board" href={`/mood-boards/${d.slug}`} ready={d.moodBoardReady} />
-              <Destination label="Design system" href={`/design-systems/${d.slug}`} ready={d.designSystemReady} />
-            </div>
-          </li>
+function Section({ number, title, entries }: { number: number; title: string; entries: Destination[] }) {
+  return (
+    <section className="mt-12">
+      <h2 className="flex items-baseline gap-3 border-b-2 border-neutral-900 pb-2 text-2xl font-bold">
+        <span className="text-neutral-600">{number}</span>
+        {title}
+      </h2>
+      <ul>
+        {entries.map((e) => (
+          <Entry key={e.href} {...e} />
         ))}
       </ul>
+    </section>
+  );
+}
 
-      <p className="mt-8 text-neutral-600">
-        The site at /thriller: not built yet. Its style is chosen after the design systems.
-      </p>
+const withPalette = (d: (typeof directions)[number]) => d.palette.map((s) => s.hex);
+
+export default function Hub() {
+  return (
+    <main className="mx-auto max-w-3xl px-6 py-12 text-neutral-900 md:py-20">
+      <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Thriller: a tribute</h1>
+
+      <Section
+        number={1}
+        title="Mood Boards"
+        entries={directions.map((d) => ({
+          label: d.name,
+          href: `/mood-boards/${d.slug}`,
+          ready: d.moodBoardReady,
+          palette: withPalette(d),
+        }))}
+      />
+      <Section
+        number={2}
+        title="Design Systems"
+        entries={directions.map((d) => ({
+          label: d.name,
+          href: `/design-systems/${d.slug}`,
+          ready: d.designSystemReady,
+          palette: withPalette(d),
+        }))}
+      />
+      <Section number={3} title="Your Site" entries={[{ label: "Thriller", href: "/thriller", ready: false }]} />
     </main>
   );
 }
