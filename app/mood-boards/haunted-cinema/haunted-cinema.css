@@ -1,0 +1,97 @@
+/* Textures and control states for the Haunted Cinema board. */
+
+.hc-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.6 0 0 0 -.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.hc-halftone {
+  background-image: radial-gradient(var(--hc-accent) 28%, transparent 30%);
+  background-size: 12px 12px;
+  mask-image: linear-gradient(to bottom, transparent, black);
+}
+
+.hc-vignette {
+  background: radial-gradient(ellipse at center, transparent 35%, #000 100%);
+}
+
+.hc-scratches {
+  background-image:
+    linear-gradient(90deg, transparent 12%, color-mix(in srgb, var(--hc-text) 55%, transparent) 12.2%, transparent 12.5%),
+    linear-gradient(90deg, transparent 47%, color-mix(in srgb, var(--hc-text) 35%, transparent) 47.1%, transparent 47.3%),
+    linear-gradient(90deg, transparent 71%, color-mix(in srgb, var(--hc-text) 45%, transparent) 71.2%, transparent 71.6%),
+    linear-gradient(90deg, transparent 90%, color-mix(in srgb, var(--hc-text) 30%, transparent) 90.1%, transparent 90.3%);
+}
+
+.hc-spotlight {
+  background:
+    conic-gradient(from 160deg at 50% -10%, transparent 0 8%, color-mix(in srgb, var(--hc-text) 30%, transparent) 14% 26%, transparent 32%),
+    var(--hc-background);
+}
+
+.hc-marquee {
+  background-image: radial-gradient(circle, var(--hc-text) 38%, transparent 42%);
+  background-size: 24px 24px;
+  background-repeat: repeat-x;
+  background-position: center;
+}
+
+.hc-frame {
+  border: 3px solid var(--hc-text);
+  outline: 1px solid var(--hc-text);
+  outline-offset: 5px;
+}
+
+/* Buttons. The is-* classes freeze a state so the board can show all of them at once. */
+.hc-btn {
+  border: 2px solid var(--hc-text);
+  padding: 0.6rem 1.25rem;
+  font-family: var(--face-hc-label), sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--hc-text);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.hc-btn--primary {
+  background: var(--hc-accent);
+  border-color: var(--hc-accent);
+}
+.hc-btn:hover:not(:disabled),
+.hc-btn.is-hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--hc-text);
+}
+.hc-btn:active:not(:disabled),
+.hc-btn.is-pressed {
+  transform: none;
+  box-shadow: none;
+  background: color-mix(in srgb, var(--hc-accent) 70%, black);
+}
+.hc-btn--secondary:active:not(:disabled),
+.hc-btn--secondary.is-pressed {
+  background: var(--hc-surface);
+}
+.hc-btn:focus-visible,
+.hc-btn.is-focus {
+  outline: 3px solid var(--hc-text);
+  outline-offset: 3px;
+}
+.hc-btn:disabled {
+  border: 2px dashed var(--hc-muted);
+  background: transparent;
+  color: var(--hc-muted);
+}
+
+/* Track list rows */
+.hc-row {
+  border-left: 6px solid transparent;
+}
+.hc-row:hover,
+.hc-row.is-hover {
+  border-left-color: var(--hc-accent);
+  background: var(--hc-surface);
+}
+.hc-row.is-selected {
+  background: var(--hc-text);
+  color: var(--hc-background);
+}
