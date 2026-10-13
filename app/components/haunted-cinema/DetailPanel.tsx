@@ -14,7 +14,7 @@ export function DetailPanel({ track, onClose, onNext }: Props) {
         {track.single && <Badge>Single</Badge>}
       </div>
       <h3 className={`${t.display} mt-3 md:!text-6xl`}>{track.title}</h3>
-      <p className={`${t.body} mt-4 max-w-[52ch]`}>Written by {track.writtenBy}.</p>
+      <p className={`${t.body} mt-4 max-w-[52ch]`}>{track.writtenBy ? `Written by ${track.writtenBy}. ` : ""}From the album Thriller, 1982.</p>
       <div className="mt-6 flex flex-wrap gap-4">
         <Button variant="primary" onClick={onNext}>Next track</Button>
         <Button onClick={onClose}>Close</Button>

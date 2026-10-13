@@ -12,7 +12,7 @@ export function TrackCard({ track, onOpen }: Props) {
       <p className={`${t.label} text-ln-muted`}>Track</p>
       <p className={`${numeral} text-8xl`}>{track.number}</p>
       <h3 className={`${t.heading} mt-4`}>{track.title}</h3>
-      <p className={`${t.bodySmall} mt-2 italic text-ln-muted`}>Written by {track.writtenBy}</p>
+      {track.writtenBy && <p className={`${t.bodySmall} mt-2 italic text-ln-muted`}>Written by {track.writtenBy}</p>}
       <div className="mt-6 flex items-center justify-between gap-4 border-t border-ln-text pt-4">
         {track.single ? <Badge>Single</Badge> : <span />}
         <Button onClick={onOpen}>Details</Button>

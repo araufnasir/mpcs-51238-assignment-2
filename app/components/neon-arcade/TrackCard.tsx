@@ -19,7 +19,7 @@ export function TrackCard({ track, onOpen }: Props) {
       </div>
       <div>
         <h3 className={trackTitle}>{track.title}</h3>
-        <p className={`${t.bodySmall} mt-2 text-na-muted`}>Written by {track.writtenBy}</p>
+        {track.writtenBy && <p className={`${t.bodySmall} mt-2 text-na-muted`}>Written by {track.writtenBy}</p>}
       </div>
       <Button onClick={onOpen} className="mb-1 self-start">Details</Button>
     </PixelBox>

@@ -27,7 +27,7 @@ export type Kit = {
   Tab: ComponentType<ButtonHTMLAttributes<HTMLButtonElement>>;
   FilterChip: ComponentType<Omit<ButtonHTMLAttributes<HTMLButtonElement>, "aria-pressed"> & { selected?: boolean }>;
   Badge: ComponentType<{ children: ReactNode }>;
-  TrackCard: ComponentType<{ track: Track; onOpen?: () => void }>;
+  TrackCard: ComponentType<{ track: Track; onOpen?: () => void; selected?: boolean }>;
   ListRow: ComponentType<ButtonHTMLAttributes<HTMLButtonElement> & { track: Track; selected?: boolean }>;
   DetailPanel: ComponentType<{ track: Track; onClose?: () => void; onNext?: () => void }>;
   EmptyState: ComponentType<Notice>;

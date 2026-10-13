@@ -73,7 +73,12 @@ export default function Hub() {
         </Row>
       </Section>
       <Section number={3} title="Your Site">
-        <p className="mt-4 text-xl font-medium text-neutral-400" aria-disabled="true">Thriller →</p>
+        <Link
+          href="/thriller"
+          className="mt-6 inline-block bg-neutral-900 px-6 py-3 text-lg font-medium text-white hover:bg-neutral-700 active:bg-black focus-visible:outline-2 focus-visible:outline-offset-4"
+        >
+          Open Thriller →
+        </Link>
       </Section>
     </main>
   );

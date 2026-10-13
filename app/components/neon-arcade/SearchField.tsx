@@ -1,9 +1,9 @@
-import type { InputHTMLAttributes } from "react";
+import type { ComponentProps } from "react";
 import { crossRects, PixelIcon, searchRects } from "./fields";
 import { TextInput } from "./TextInput";
 import { focusRing } from "./type";
 
-type Props = Omit<InputHTMLAttributes<HTMLInputElement>, "type"> & { onClear?: () => void };
+type Props = Omit<ComponentProps<"input">, "type"> & { onClear?: () => void };
 
 /** The track browser's search: a magnifier, the input, and a clear button once there is text. */
 export function SearchField({ onClear, value, ...props }: Props) {
