@@ -1,0 +1,59 @@
+/* Pieces of the Liner Notes library that utility classes cannot express. */
+
+@layer components {
+  /* Paper tooth: a faint speckle, printed in ink. */
+  .lnu-tooth {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .14 0 0 0 0 .11 0 0 0 0 .09 1.4 0 0 0 -.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Checkbox, radio and toggle: native inputs, drawn with their ::before. */
+  .lnu-check,
+  .lnu-radio,
+  .lnu-toggle {
+    position: relative;
+  }
+  .lnu-check::before,
+  .lnu-radio::before,
+  .lnu-toggle::before {
+    content: "";
+    position: absolute;
+    background: var(--ln-background);
+  }
+  .lnu-check::before {
+    inset: 0;
+    opacity: 0;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5 6.5 12 13 4.5' fill='none' stroke='black' stroke-width='1.6'/%3E%3C/svg%3E") center / 80% no-repeat;
+  }
+  .lnu-check:checked::before {
+    opacity: 1;
+  }
+  .lnu-radio::before {
+    inset: 5px;
+    border-radius: 50%;
+    opacity: 0;
+  }
+  .lnu-radio:checked::before {
+    opacity: 1;
+  }
+  .lnu-toggle::before {
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    background: var(--ln-text);
+    transition: transform 0.1s;
+  }
+  .lnu-toggle:checked::before {
+    background: var(--ln-background);
+    transform: translateX(20px);
+  }
+  .lnu-toggle:disabled::before {
+    background: var(--ln-muted);
+  }
+
+  @keyframes lnu-fade {
+    50% {
+      opacity: 0.5;
+    }
+  }
+}

@@ -22,7 +22,7 @@ export const textureArtifacts: Artifact[] = [
     span: "md:col-span-3",
     node: (
       <div className={tile}>
-        <div className="ln-tooth absolute inset-0 mix-blend-multiply" />
+        <div className="lnu-tooth absolute inset-0 mix-blend-multiply" />
       </div>
     ),
   },

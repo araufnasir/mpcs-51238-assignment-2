@@ -49,5 +49,7 @@
   --color-ln-text: var(--ln-text);
   --color-ln-muted: var(--ln-muted);
   --color-ln-accent: var(--ln-accent);
+  --color-ln-border: var(--ln-muted);
+  --color-ln-pressed: color-mix(in srgb, var(--ln-text) 12%, var(--ln-background));
   --font-ln: var(--face-ln), serif;
 }
