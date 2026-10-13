@@ -16,4 +16,4 @@ export { TrackCard } from "./TrackCard";
 export { EmptyState, ErrorState, LoadingState, SuccessState } from "./UiStates";
 export { HauntedTheme } from "./theme";
 export { type } from "./type";
-export { Bats, FilmDivider, FilmStrip, MoonAndTree } from "./illustrations";
+export { Bats, FilmDivider, FilmStrip, Hand, MoonAndTree } from "./illustrations";

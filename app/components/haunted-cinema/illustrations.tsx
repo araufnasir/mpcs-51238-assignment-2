@@ -69,20 +69,46 @@ const bats = [
   { x: 40, y: 120, s: 0.55, r: 6 },
 ];
 
-export function Bats({ tone = "board", label = "A swarm of bats crossing the moon", ...rest }: Common) {
+type BatsProps = Common & {
+  /** Draw the moon behind the bats. */
+  moon?: boolean;
+  /** Draw only the first few bats. */
+  count?: number;
+};
+
+/** In the quiet tone the bats take the text color of their surroundings, so a parent can set them to Ash. */
+export function Bats({ tone = "board", label = "A swarm of bats crossing the moon", moon = true, count = bats.length, ...rest }: BatsProps) {
   const board = tone === "board";
   return (
     <Art viewBox="0 0 300 160" label={label} {...rest}>
       {board && <rect width="300" height="160" fill={SURFACE} />}
-      <circle cx="150" cy="80" r="62" fill={MUTED} />
-      {bats.map(({ x, y, s, r }) => (
+      {moon && <circle cx="150" cy="80" r="62" fill={MUTED} />}
+      {bats.slice(0, count).map(({ x, y, s, r }) => (
         <path
           key={`${x}-${y}`}
           transform={`translate(${x} ${y}) rotate(${r}) scale(${s})`}
           d="M0 0C-8-10-20-12-34-4-27-4-22 0-20 7-14 2-8 4-4 11L0 6 4 11C8 4 14 2 20 7 22 0 27-4 34-4 20-12 8-10 0 0z"
-          fill={board ? BACKGROUND : TEXT}
+          fill={board ? BACKGROUND : "currentColor"}
         />
       ))}
+    </Art>
+  );
+}
+
+export function Hand({ tone = "board", label = "A hand reaching out of the ground in front of a red sun", ...rest }: Common) {
+  const board = tone === "board";
+  const ink = board ? BACKGROUND : MUTED;
+  return (
+    <Art viewBox="0 0 200 240" label={label} {...rest}>
+      {board && <circle cx="100" cy="100" r="85" fill={ACCENT} />}
+      <g fill="none" stroke={ink} strokeWidth="13" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M82 178 60 152 55 130M88 162 80 112 84 80M100 160V102l4-34M112 162l8-52 6-26M122 170l18-38 10-18" />
+      </g>
+      <g fill={ink}>
+        <ellipse cx="100" cy="178" rx="29" ry="30" />
+        <path d="M76 190 70 240h60l-6-50z" />
+        {board && <path d="M0 240v-20Q50 205 100 222T200 215v25z" />}
+      </g>
     </Art>
   );
 }

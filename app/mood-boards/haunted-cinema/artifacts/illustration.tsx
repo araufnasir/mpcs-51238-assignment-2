@@ -1,4 +1,4 @@
-import { Art, Bats, FilmStrip, MoonAndTree, Sky } from "../../../components/haunted-cinema/illustrations";
+import { Art, Bats, FilmStrip, Hand, MoonAndTree, Sky } from "../../../components/haunted-cinema/illustrations";
 import type { Artifact } from "../../../lib/artifact";
 
 export const illustrationArtifacts: Artifact[] = [
@@ -28,19 +28,7 @@ export const illustrationArtifacts: Artifact[] = [
   {
     title: "Reaching hand",
     span: "md:col-span-4",
-    node: (
-      <Art viewBox="0 0 200 240" label="A hand reaching out of the ground in front of a red sun">
-        <circle cx="100" cy="100" r="85" fill="var(--hc-accent)" />
-        <g fill="none" stroke="var(--hc-background)" strokeWidth="13" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M82 178 60 152 55 130M88 162 80 112 84 80M100 160V102l4-34M112 162l8-52 6-26M122 170l18-38 10-18" />
-        </g>
-        <g fill="var(--hc-background)">
-          <ellipse cx="100" cy="178" rx="29" ry="30" />
-          <path d="M76 190 70 240h60l-6-50z" />
-          <path d="M0 240v-20Q50 205 100 222T200 215v25z" />
-        </g>
-      </Art>
-    ),
+    node: <Hand />,
   },
   {
     title: "Eye",
